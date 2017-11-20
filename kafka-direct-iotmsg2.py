@@ -72,24 +72,24 @@ if __name__ == "__main__":
             # Processing of RDD with IoT sendor data goes here
             #################################################
 
-			weeklyIoTGDF = \
-			  jsonRDD \
-				.groupBy("guid", window("eventTime", "1 week", "1 week")) \
-				.agg(min('payload.data.temperature'), max('payload.data.temperature'), mean('payload.data.temperature'), min('payload.data.windspeed'), max('payload.data.windspeed'), mean('payload.data.windspeed')) \
-				.orderBy("window.start")
+            weeklyIoTGDF = \
+                jsonRDD \
+                .groupBy("guid", window("eventTime", "1 week", "1 week")) \
+                .agg(min('payload.data.temperature'), max('payload.data.temperature'), mean('payload.data.temperature'), min('payload.data.windspeed'), max('payload.data.windspeed'), mean('payload.data.windspeed')) \
+                .orderBy("window.start")
 				
-			print("Show Weekly IoT Sensor Stats")
-			weeklyIoTGDF.show()
+            print("Show Weekly IoT Sensor Stats")
+            weeklyIoTGDF.show()
 
-			dailyIoTGDF = \
-			  jsonRDD \
-				.groupBy("guid", window("eventTime", "1 days", "1 days")) \
-				.agg(min('payload.data.temperature'), max('payload.data.temperature'), mean('payload.data.temperature'), \
-					 min('payload.data.windspeed'), max('payload.data.windspeed'), mean('payload.data.windspeed')) \
-				.orderBy("window.start")
-
-			print("Show Daily IoT Sensor Stats")
-			dailyIoTGDF.show()
+            dailyIoTGDF = \
+                jsonRDD \
+                .groupBy("guid", window("eventTime", "1 days", "1 days")) \
+                .agg(min('payload.data.temperature'), max('payload.data.temperature'), mean('payload.data.temperature'), \
+                  min('payload.data.windspeed'), max('payload.data.windspeed'), mean('payload.data.windspeed')) \
+                .orderBy("window.start")
+           
+	    print("Show Daily IoT Sensor Stats")
+            dailyIoTGDF.show()
 
             # print("Show IoT Sensor temperatures sorted in descending order")
             # sqlContext.sql("select payload.data.temperature \
